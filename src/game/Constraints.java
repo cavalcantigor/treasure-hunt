@@ -8,4 +8,20 @@ public class Constraints {
 	public static int PIRATE_POINTS = 100;
 	public static int MIN_PLAYER_DIG_POINTS = 4;
 	public static int MAX_PLAYER_DIG_POINTS = 7;
+	public static int MAP_COLUMNS = 10;
+	public static int MAP_ROWS = 10;
+	
+	public static String[] LABELS = {
+			"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+			"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+	};
+	
+	public static int transformLabelCoordinate(String label) {
+		for(int i = 0; i < MAP_COLUMNS; i++) {
+			if(LABELS[i].equalsIgnoreCase(label)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

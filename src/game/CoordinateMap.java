@@ -4,7 +4,7 @@ public class CoordinateMap {
 	private int row;
 	private int column;
 	private int treasure;
-	private boolean digged;
+	private boolean dug;
 	
 	public CoordinateMap() {
 	}
@@ -39,11 +39,11 @@ public class CoordinateMap {
 		this.treasure = treasure;
 	}
 
-	public boolean getDigged() {
-		return digged;
+	public boolean getDug() {
+		return dug;
 	}
 
-	public void setDigged(boolean digged) {
-		this.digged = digged;
+	public void setDug(boolean digged) {
+		this.dug = digged;
 	}
 }
