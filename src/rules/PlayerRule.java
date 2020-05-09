@@ -45,7 +45,7 @@ public class PlayerRule {
 		player.setName(name);
 	}
 	
-	public static void validatePlayerAge(Scanner scan, Player player, int i) {
+	public static void validatePlayerAge(Scanner scan, Player player) {
 		int age;
 		
 		// infinite loop
@@ -69,7 +69,9 @@ public class PlayerRule {
 		Random r = new Random();
 		
 		// generate random numbers between max (inclusive) and min (inclusive)
-		int digPoints = r.nextInt(Constraints.MAX_PLAYER_DIG_POINTS + 1) + Constraints.MIN_PLAYER_DIG_POINTS;
+		int digPoints = r.nextInt(
+				Constraints.MAX_PLAYER_DIG_POINTS - Constraints.MIN_PLAYER_DIG_POINTS
+		) + Constraints.MIN_PLAYER_DIG_POINTS;
 		
 		// set dig point to player
 		player.setDigPoints(digPoints);
