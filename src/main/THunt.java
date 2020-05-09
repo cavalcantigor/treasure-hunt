@@ -2,6 +2,7 @@
 package main;
 
 import java.util.Scanner;
+
 import game.Player;
 import rules.PlayerRule;
 
@@ -18,6 +19,7 @@ public class THunt {
 		for(int i = 0; i < nPlayers; i++) {
 			players[i] = new Player();
 			PlayerRule.validatePlayerName(scan, players[i], i + 1);
+			PlayerRule.validatePlayerAge(scan, players[i]);
 		}
 		
 		scan.close();
