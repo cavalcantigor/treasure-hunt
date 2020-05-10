@@ -19,7 +19,7 @@ public class Constraints {
 	public static int transformLabelCoordinate(String label) {
 		for(int i = 0; i < MAP_COLUMNS; i++) {
 			if(LABELS[i].equalsIgnoreCase(label)) {
-				return i;
+				return i + 1;
 			}
 		}
 		return -1;

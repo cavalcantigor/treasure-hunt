@@ -73,4 +73,12 @@ public class TreasureMap {
 		// print blank line
 		System.out.println();
 	}
+	
+	public boolean isCoordinateDug(int row, int col) {
+		return this.coordinates[row][col].getDug();
+	}
+	
+	public void dig(int row, int col) {
+		this.coordinates[row][col].setDug(true);
+	}
 }

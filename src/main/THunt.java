@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import game.Constraints;
 import game.CoordinateMap;
+import game.Game;
 import game.Player;
 import game.TreasureMap;
 import rules.PlayerRule;
@@ -26,11 +27,8 @@ public class THunt {
 			PlayerRule.validatePlayerAge(scan, players[i]);
 		}
 		
-		CoordinateMap[] treasures = new CoordinateMap[1];
-		treasures[0] = new CoordinateMap(0, 0, 25);
-
-		map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, treasures);
-		map.drawMap();
+		Game game = new Game(scan, players, map);
+		game.runGame();
 		
 		scan.close();
 	}
