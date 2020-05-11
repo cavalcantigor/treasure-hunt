@@ -3,20 +3,20 @@ package game;
 public class CoordinateMap {
 	private int row;
 	private int column;
-	private int treasure;
+	private boolean treasure;
 	private boolean dug;
 	
 	public CoordinateMap() {
 	}
 	
-	public CoordinateMap(int row, int column, int treasure) {
+	public CoordinateMap(int row, int column, boolean treasure) {
 		this.row = row;
 		this.column = column;
 		this.treasure = treasure;
 	}
 
 	public int getRow() {
-		return row;
+		return this.row;
 	}
 
 	public void setRow(int row) {
@@ -24,26 +24,26 @@ public class CoordinateMap {
 	}
 
 	public int getColumn() {
-		return column;
+		return this.column;
 	}
 
 	public void setColumn(int column) {
 		this.column = column;
 	}
 
-	public int getTreasure() {
-		return treasure;
+	public boolean getTreasure() {
+		return this.treasure;
 	}
 
-	public void setTreasure(int treasure) {
+	public void setTreasure(boolean treasure) {
 		this.treasure = treasure;
 	}
 
 	public boolean getDug() {
-		return dug;
+		return this.dug;
 	}
 
-	public void setDug(boolean digged) {
-		this.dug = digged;
+	public void setDug(boolean dug) {
+		this.dug = dug;
 	}
 }

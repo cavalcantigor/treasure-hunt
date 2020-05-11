@@ -3,8 +3,6 @@ package main;
 
 import java.util.Scanner;
 
-import game.Constraints;
-import game.CoordinateMap;
 import game.Game;
 import game.Player;
 import game.TreasureMap;
@@ -17,7 +15,6 @@ public class THunt {
 		Scanner scan = new Scanner(System.in);
 		int nPlayers = 0;
 		Player[] players;
-		TreasureMap map = new TreasureMap();
 		
 		nPlayers = PlayerRule.validateNPlayers(scan);
 		players = new Player[nPlayers];
@@ -25,10 +22,12 @@ public class THunt {
 			players[i] = new Player();
 			PlayerRule.validatePlayerName(scan, players[i], i + 1);
 			PlayerRule.validatePlayerAge(scan, players[i]);
+			PlayerRule.validatePlayerDigPoints(scan, players[i]);
 		}
 		
+		TreasureMap map = new TreasureMap();
 		Game game = new Game(scan, players, map);
-		game.runGame();
+		game.run();
 		
 		scan.close();
 	}

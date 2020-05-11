@@ -2,26 +2,6 @@ package game;
 
 public class TreasureMap {
 	
-	/**
-	 *  [n] => [
-	 *    			[CoordinateMap, CoordinateMap, CoordinateMap],
-	 *    			[CoordinateMap, CoordinateMap, CoordinateMap]
-	 *  	   ]
-	 *  
-	 *  [ (0,0), (0,1), (0,2) ]
-	 *  [ (1,0), (1,1), (1,2) ]
-	 *  [ (2,0), (2,1), (2,2) ]
-	 *  
-	 *  coordinate[0] ==> [CoordinateMap, CoordinateMap, CoordinateMap]
-	 *  coordinate[2] ==> [CoordinateMap, CoordinateMap, CoordinateMap]
-	 *  coordinate[0][2] ==> CoordinateMap ==> coordinate[0][2].getRow(); 
-	 *  coordinate[2][2] ==> CoordinateMap
-	 *  
-	 *  
-	 *  treasures[] => [(0, 0, 10)  (2, 1, 5) ...]
-	 * 
-	 * */
-
 	private CoordinateMap[][] coordinates;
 	
 	public void createMap(int rows, int columns, CoordinateMap[] treasures) {
@@ -32,12 +12,12 @@ public class TreasureMap {
 				this.coordinates[i][j].setRow(i);
 				this.coordinates[i][j].setColumn(j);
 				this.coordinates[i][j].setDug(false);
-				this.coordinates[i][j].setTreasure(0);
+				this.coordinates[i][j].setTreasure(false);
 			}
 		}
 		for(int i = 0; i < treasures.length; i++) {
 			this.coordinates[treasures[i].getRow()][treasures[i].getColumn()].setTreasure(
-					treasures[i].getTreasure()
+					true
 			);
 		}
 	}
@@ -48,7 +28,8 @@ public class TreasureMap {
 		
 		for(int i = 0; i < Constraints.MAP_COLUMNS; i++) {
 			// %4s ---> "   A"
-			System.out.format("%4s", Constraints.LABELS[i]);
+			System.out.print(" ");
+			System.out.format("%5s", Constraints.LABELS[i]);
 		}
 		
 		// print blank line
@@ -60,9 +41,9 @@ public class TreasureMap {
 			
 			for(int j = 0; j < this.coordinates[i].length; j++) {
 				if(this.coordinates[i][j].getDug()) {
-					System.out.print(" X  ");
+					System.out.print("   X  ");
 				} else {
-					System.out.print(" #  ");
+					System.out.print("   -  ");
 				}
 			}
 			
@@ -78,7 +59,18 @@ public class TreasureMap {
 		return this.coordinates[row][col].getDug();
 	}
 	
-	public void dig(int row, int col) {
+	public boolean hasTreasure(int row, int col) {
+		return this.coordinates[row][col].getTreasure();
+	}
+	
+	public boolean dig(int row, int col) {
+		boolean hasTreasure = this.hasTreasure(row, col);
+		
+		if(hasTreasure) {
+			this.coordinates[row][col].setTreasure(false);
+		}
 		this.coordinates[row][col].setDug(true);
+		
+		return hasTreasure;
 	}
 }
