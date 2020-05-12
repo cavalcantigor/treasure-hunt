@@ -33,7 +33,7 @@ public class PlayerRule {
 			System.out.println("[Player " + i + "] Whats your name? ");
 			name = scan.nextLine(); // reading name and surname
 			
-			// split by regex "blank space" and generate an array of Strings
+			// split by regular expression "blank space" and generate an array of Strings
 			if (name.split("\\s+").length == 1) {
 				System.out.println("Invalid data! Should enter name and surname");
 				System.out.println("Please, re-enter name and surname...");
@@ -42,7 +42,8 @@ public class PlayerRule {
 				break;
 			}
 		}
-		player.setName(name);
+		player.setName(name.split("\\s+")[0]);
+		player.setSurname(name.split("\\s+")[1]);
 	}
 	
 	public static void validatePlayerAge(Scanner scan, Player player) {

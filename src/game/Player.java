@@ -4,6 +4,7 @@ package game;
 public class Player {
 	private int age;
 	private String name;
+	private String surname;
 	private int piratePoints;
 	private int digPoints;
 	
@@ -21,6 +22,14 @@ public class Player {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getSurname() {
+		return this.surname;
+	}
+	
+	public void setSurname(String name) {
+		this.surname = name;
 	}
 
 	public int getDigPoints() {
