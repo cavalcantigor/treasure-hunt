@@ -1,5 +1,11 @@
 package game;
 
+/** 
+ * Controls all game variables.
+ * @author Cassio Towesend
+ * @version 1.0
+ * @since 1.0
+*/
 public class Constraints {
 	public static int MIN_PLAYERS = 2;
 	public static int MAX_PLAYERS = 4;

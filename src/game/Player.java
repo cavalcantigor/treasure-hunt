@@ -1,12 +1,18 @@
 package game;
 
-
+/** 
+ * Represents a coordinate player.
+ * @author Cassio Towesend
+ * @version 1.0
+ * @since 1.0
+*/
 public class Player {
-	private int age;
-	private String name;
-	private String surname;
-	private int piratePoints;
-	private int digPoints;
+
+	private int age;				// player age
+	private String name;			// player name
+	private String surname;			// player surname
+	private int piratePoints;		// player pirate points
+	private int digPoints;			// player dig points
 	
 	public int getAge() {
 		return this.age;
