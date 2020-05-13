@@ -38,6 +38,7 @@ public class Game {
 	 * */
 	public void run() {
 		boolean continueGame = true; // control the game main loop
+		boolean treasureFound = false; // control if move found treasure
 
 		// creates the map with n rows and n columns; also set treasure on the map
 		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, this.loadFileTreasures());
@@ -60,7 +61,10 @@ public class Game {
 							"... it be your turn to dig for me treasure.");
 
 					// current player move
-					if(move(this.players[i])) {
+					treasureFound = move(this.players[i]);
+					
+					// if the move found treasure
+					if(treasureFound) {
 
 						// if move succeeds, then the player earn pirate points bonus
 						this.players[i].setPiratePoints(
@@ -169,12 +173,12 @@ public class Game {
 				System.out.println("Sorry... you cannot 'dig' in the same place more than once.");
 				System.out.println("Please, re-enter coordinates...");
 			} else {
-
-				// if coordinate is OK, then mark as dug
-				this.map.dig(rowCoordinate - 1, colCoordinate - 1);
 				
 				// save if location dug has a treasure
 				hasTreasure = this.map.hasTreasure(rowCoordinate - 1, colCoordinate - 1);
+				
+				// if coordinate is OK, then mark as dug
+				this.map.dig(rowCoordinate - 1, colCoordinate - 1);
 				
 				// adding player move to list of moves
 				player.getMoves().add(new CoordinateMap(rowCoordinate, colCoordinate, hasTreasure));

@@ -71,6 +71,10 @@ public class TreasureMap {
 	 * @param row integer that represents column map
 	 * */
 	public void dig(int row, int col) {
+		// collect treasure if it exists
+		this.coordinates[row][col].setTreasure(false);
+		
+		// dig location
 		this.coordinates[row][col].setDug(true);
 	}
 	
