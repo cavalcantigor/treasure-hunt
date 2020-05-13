@@ -8,7 +8,7 @@ import java.util.Scanner;
 import rules.GameRule;
 
 /** 
- * Manage the game.
+ * Manages the game.
  * @author Cassio Towesend
  * @version 1.0
 */
@@ -17,6 +17,7 @@ public class Game {
 	private Scanner scan;				// scan object that read all input data from players
 	private Player[] players;			// players on the game
 	private TreasureMap map;			// game map
+	private Display display;			// object that manages game display
 	
 	/**
 	 * Object constructor.
@@ -28,6 +29,7 @@ public class Game {
 		this.scan = scan;
 		this.players = players;
 		this.map = map;
+		this.display = new Display(this.map, this.players);
 	}
 	
 	/**
@@ -46,13 +48,16 @@ public class Game {
 
 				// if current player has dig points
 				if(this.players[i].getDigPoints() > 0) {
-
+					
+					// print sequence of players moves 
+					this.display.printPlayersMoves();
+					
 					// draw map
-					this.map.drawMap();
+					this.display.drawMap();
 
 					// annunciate player turn
-					System.out.println("Argh..Pirate " + players[i].getName() + 
-							"...it be your turn to dig for me treasure.");
+					System.out.println("Argh... Pirate " + players[i].getName() + 
+							"... it be your turn to dig for me treasure.");
 
 					// current player move
 					if(move(this.players[i])) {
@@ -148,6 +153,7 @@ public class Game {
 	public boolean move(Player player) {
 		int rowCoordinate;					// row coordinate
 		int colCoordinate;					// column coordinate
+		boolean hasTreasure; 				// boolean that save if coordinate has treasure
 		
 		// infinite loop
 		while(true) {
@@ -167,8 +173,14 @@ public class Game {
 				// if coordinate is OK, then mark as dug
 				this.map.dig(rowCoordinate - 1, colCoordinate - 1);
 				
+				// save if location dug has a treasure
+				hasTreasure = this.map.hasTreasure(rowCoordinate - 1, colCoordinate - 1);
+				
+				// adding player move to list of moves
+				player.getMoves().add(new CoordinateMap(rowCoordinate, colCoordinate, hasTreasure));
+				
 				// return if the place dug has a treasure
-				return this.map.hasTreasure(rowCoordinate - 1, colCoordinate - 1);
+				return hasTreasure;
 			}
 		}
 	}
