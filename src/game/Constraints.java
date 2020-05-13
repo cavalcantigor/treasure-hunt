@@ -4,7 +4,6 @@ package game;
  * Controls all game variables.
  * @author Cassio Towesend
  * @version 1.0
- * @since 1.0
 */
 public class Constraints {
 	public static int MIN_PLAYERS = 2;
@@ -18,6 +17,7 @@ public class Constraints {
 	public static int MAX_PLAYER_DIG_POINTS = 7;
 	public static int MAP_COLUMNS = 10;
 	public static int MAP_ROWS = 10;
+	public static String PIRATE_PETE_FILE = "PiratePete.txt";
 	
 	public static String[] LABELS = {
 			"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",

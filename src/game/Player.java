@@ -4,7 +4,6 @@ package game;
  * Represents a coordinate player.
  * @author Cassio Towesend
  * @version 1.0
- * @since 1.0
 */
 public class Player {
 

@@ -1,10 +1,11 @@
 package game;
 
+import java.util.List;
+
 /** 
  * Represents a treasure map.
  * @author Cassio Towesend
  * @version 1.0
- * @since 1.0
 */
 public class TreasureMap {
 	
@@ -16,7 +17,7 @@ public class TreasureMap {
 	 * @param row integer that indicates the number of map columns
 	 * @param row CoordinateMap array of treasure locations
 	 * */
-	public void createMap(int rows, int columns, CoordinateMap[] treasures) {
+	public void createMap(int rows, int columns, List<CoordinateMap> treasures) {
 		
 		// instantiate a new coordinate map matrix
 		this.coordinates = new CoordinateMap[rows][columns];
@@ -35,10 +36,10 @@ public class TreasureMap {
 		}
 		
 		// travel treasures
-		for(int i = 0; i < treasures.length; i++) {
+		for(int i = 0; i < treasures.size(); i++) {
 			
 			// for each treasure, set treasure as true on map
-			this.coordinates[treasures[i].getRow()][treasures[i].getColumn()].setTreasure(
+			this.coordinates[treasures.get(i).getRow()][treasures.get(i).getColumn()].setTreasure(
 					true
 			);
 		}
@@ -74,10 +75,15 @@ public class TreasureMap {
 			for(int j = 0; j < this.coordinates[i].length; j++) {
 				
 				// if coordinate is dug
-				if(this.coordinates[i][j].getDug()) {
+				if(this.isCoordinateDug(i, j)) {
 					
-					// print dug place
-					System.out.print("| X ");
+					if(this.hasTreasure(i, j)) {
+						// print dug place with treasure
+						System.out.print("| O ");
+					} else {
+						// print dug place without treasure
+						System.out.print("| X ");
+					}
 				} else {
 					
 					// print empty place
@@ -118,19 +124,11 @@ public class TreasureMap {
 	}
 	
 	/**
-	 * Method that checks, dig a coordinate and collects a treasure.
+	 * Method that dig a coordinate.
 	 * @param row integer that represents row map
 	 * @param row integer that represents column map
-	 * @return true if dig has collected treasure; false otherwise
 	 * */
-	public boolean dig(int row, int col) {
-		boolean hasTreasure = this.hasTreasure(row, col);
-		
-		if(hasTreasure) {
-			this.coordinates[row][col].setTreasure(false);
-		}
+	public void dig(int row, int col) {
 		this.coordinates[row][col].setDug(true);
-		
-		return hasTreasure;
 	}
 }

@@ -12,7 +12,6 @@ import rules.PlayerRule;
  * Starts application.
  * @author Cassio Towesend
  * @version 1.0
- * @since 1.0
 */
 public class THunt {
 

@@ -1,5 +1,7 @@
 package game;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +11,6 @@ import rules.GameRule;
  * Manage the game.
  * @author Cassio Towesend
  * @version 1.0
- * @since 1.0
 */
 public class Game {
 
@@ -34,12 +35,10 @@ public class Game {
 	 * @return
 	 * */
 	public void run() {
-		boolean continueGame = true;						// control the game main loop
-		CoordinateMap[] treasures = new CoordinateMap[1];
-		treasures[0] = new CoordinateMap(0, 0, true);
+		boolean continueGame = true; // control the game main loop
 
 		// creates the map with n rows and n columns; also set treasure on the map
-		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, treasures);
+		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, this.loadFileTreasures());
 
 		// main game loop
 		while(continueGame) {
@@ -95,6 +94,52 @@ public class Game {
 	}
 	
 	/**
+	 * Read Pirate Pete file and load coordinates list.
+	 * @return an array list of CoordinateMaps if success; otherwise, return null.
+	 * */
+	private List<CoordinateMap> loadFileTreasures() {
+		Scanner fileScan;						// scanner to read file
+		List<CoordinateMap> treasure = null;	// list of coordinate map with treasure location
+		
+		// block to handle error
+		try {
+			File piratePeteFile = new File(Constraints.PIRATE_PETE_FILE); 	// file pirate pete
+			
+			// instantiate a new scanner object
+			fileScan = new Scanner(piratePeteFile);
+			
+			// instantiate a new list of coordinate map
+			treasure = new ArrayList<CoordinateMap>();
+			
+			int col; // column to be read from file
+			int row; // row to be read from file
+			
+			// read all file while has token
+			while(fileScan.hasNext()) {
+				
+				// read column label and transform to integer
+				col = Constraints.transformLabelCoordinate(fileScan.nextLine());
+				
+				// read row value from file
+				row = Integer.valueOf(fileScan.nextLine());
+				
+				// add a coordinate to treasure list
+				treasure.add(new CoordinateMap(row - 1, col - 1, true));
+			}
+			
+			// closes scan
+			fileScan.close();
+		
+		} catch (Exception e) { // if an error is raised
+			System.out.println("An error ocurred on loading file treasures.");
+			e.printStackTrace();
+		}
+		
+		// return the list of treasures
+		return treasure;
+	}
+	
+	/**
 	 * Method that do a player move. It validates player input and
 	 * and dig a new square on map.
 	 * @param player player doing the move
@@ -106,12 +151,12 @@ public class Game {
 		
 		// infinite loop
 		while(true) {
-
-			// get row move from player
-			rowCoordinate = GameRule.validateRowMove(this.scan, player);
-
+			
 			// get column move from player
 			colCoordinate = GameRule.validateColMove(this.scan, player);
+			
+			// get row move from player
+			rowCoordinate = GameRule.validateRowMove(this.scan, player);
 			
 			// check if coordinate move was previously dug
 			if(this.map.isCoordinateDug(rowCoordinate - 1, colCoordinate - 1)) {
@@ -119,8 +164,11 @@ public class Game {
 				System.out.println("Please, re-enter coordinates...");
 			} else {
 
-				// if coordinate is OK, then mark as dug and collect some treasure (if exists)
-				return this.map.dig(rowCoordinate - 1, colCoordinate - 1);
+				// if coordinate is OK, then mark as dug
+				this.map.dig(rowCoordinate - 1, colCoordinate - 1);
+				
+				// return if the place dug has a treasure
+				return this.map.hasTreasure(rowCoordinate - 1, colCoordinate - 1);
 			}
 		}
 	}
