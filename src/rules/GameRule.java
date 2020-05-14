@@ -19,7 +19,7 @@ public class GameRule {
 			System.out.println("Enter row coordinate [" + rangeRow + "]: ");
 			row = Integer.valueOf(scan.nextLine());
 			
-			if (row > Constraints.MAP_ROWS || row < 0) {
+			if (row > Constraints.MAP_ROWS || row <= 0) {
 				System.out.println("Invalid range!");
 				System.out.println("Please, re-enter coordinate...");
 			} else {
