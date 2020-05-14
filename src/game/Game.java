@@ -1,7 +1,6 @@
 package game;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class Game {
 	private Player[] players;				// players on the game
 	private TreasureMap map;				// game map
 	private Display display;				// object that manages game display
-	private List<CoordinateMap> treasures;  // array of treasures hidden on map
+	private int[][] treasures;  // matrix of treasures hidden on map
 	
 	/**
 	 * Object constructor.
@@ -31,6 +30,7 @@ public class Game {
 		this.players = players;
 		this.map = map;
 		this.display = new Display(this.map, this.players);
+		this.treasures = new int[Constraints.MAP_ROWS][Constraints.MAP_COLUMNS];
 	}
 	
 	/**
@@ -41,14 +41,15 @@ public class Game {
 		boolean continueGame = true; // control the game main loop
 		boolean treasureFound = false; // control if move found treasure
 		
-		// load file with treasure locations
-		this.treasures = this.loadFileTreasures();
+		// loads file with coordinates of treasures 
+		this.loadFileTreasures();
 		
 		// creates the map with n rows and n columns; also set treasure on the map
 		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, this.treasures);
 
 		// main game loop
 		while(continueGame) {
+			
 			for(int i = 0; i < this.players.length; i++) {
 
 				// if current player has dig points
@@ -101,18 +102,21 @@ public class Game {
 				}
 			}
 		}
+		// print sequence of players moves 
+		this.display.printPlayersMoves();
+		
+		// draw map
+		this.display.drawMap();
 		
 		// end game and celebrate winner(s)
 		this.end();
 	}
 	
 	/**
-	 * Read Pirate Pete file and load coordinates list.
-	 * @return an array list of CoordinateMaps if success; otherwise, return null.
+	 * Read Pirate Pete file and load treasures.
 	 * */
-	private List<CoordinateMap> loadFileTreasures() {
+	private void loadFileTreasures() {
 		Scanner fileScan;						// scanner to read file
-		List<CoordinateMap> treasure = null;	// list of coordinate map with treasure location
 		
 		// block to handle error
 		try {
@@ -120,9 +124,6 @@ public class Game {
 			
 			// instantiate a new scanner object
 			fileScan = new Scanner(piratePeteFile);
-			
-			// instantiate a new list of coordinate map
-			treasure = new ArrayList<CoordinateMap>();
 			
 			int col; // column to be read from file
 			int row; // row to be read from file
@@ -137,7 +138,7 @@ public class Game {
 				row = Integer.valueOf(fileScan.nextLine());
 				
 				// add a coordinate to treasure list
-				treasure.add(new CoordinateMap(row - 1, col - 1, true));
+				this.treasures[row - 1][col - 1] = 1;
 			}
 			
 			// closes scan
@@ -147,9 +148,6 @@ public class Game {
 			System.out.println("An error ocurred on loading file treasures.");
 			e.printStackTrace();
 		}
-		
-		// return the list of treasures
-		return treasure;
 	}
 	
 	/**
@@ -184,11 +182,8 @@ public class Game {
 				// if found treasure
 				if (hasTreasure) {
 					
-					// set treasure array as false
-					this.treasures.get(
-						// get the treasure object that match the move location
-						this.treasures.indexOf(new CoordinateMap(rowCoordinate - 1, colCoordinate - 1, true))
-					).setTreasure(false);
+					// collect treasure
+					this.treasures[rowCoordinate - 1][colCoordinate - 1] = 0;
 				}
 				
 				// if coordinate is OK, then mark as dug
@@ -224,7 +219,7 @@ public class Game {
 				
 				// annunciate all tied winners
 				for(int i = 0; i < digPointsWinners.size(); i++) {
-					System.out.print(digPointsWinners.get(i).getName() + " ");
+					System.out.print(digPointsWinners.get(i).getName() + ", ");
 				}
 			} else {
 				
@@ -238,5 +233,7 @@ public class Game {
 		}
 		
 		System.out.println("won the game. Keelhaul the rest of them!");
+		
+		System.out.println("\n\n\n --------- THE END --------");
 	}
 }

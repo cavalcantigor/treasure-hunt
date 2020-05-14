@@ -1,7 +1,5 @@
 package game;
 
-import java.util.List;
-
 /** 
  * Represents a treasure map.
  * @author Cassio Towesend
@@ -17,7 +15,7 @@ public class TreasureMap {
 	 * @param row integer that indicates the number of map columns
 	 * @param row CoordinateMap array of treasure locations
 	 * */
-	public void createMap(int rows, int columns, List<CoordinateMap> treasures) {
+	public void createMap(int rows, int columns, int[][] treasures) {
 		
 		// instantiate a new coordinate map matrix
 		this.coordinates = new CoordinateMap[rows][columns];
@@ -31,17 +29,10 @@ public class TreasureMap {
 				this.coordinates[i][j].setRow(i);
 				this.coordinates[i][j].setColumn(j);
 				this.coordinates[i][j].setDug(false);
-				this.coordinates[i][j].setTreasure(false);
+				this.coordinates[i][j].setTreasure(
+					treasures[i][j] == 1 ? true : false
+				);
 			}
-		}
-		
-		// travel treasures
-		for(int i = 0; i < treasures.size(); i++) {
-			
-			// for each treasure, set treasure as true on map
-			this.coordinates[treasures.get(i).getRow()][treasures.get(i).getColumn()].setTreasure(
-					true
-			);
 		}
 	}
 	

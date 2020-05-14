@@ -20,7 +20,7 @@ public class Display {
 	 * */
 	public void drawMap() {
 		// print blank line
-		System.out.print("\n   ");
+		System.out.print("\n\n   ");
 		
 		// travel map columns
 		for(int i = 0; i < Constraints.MAP_COLUMNS; i++) {
@@ -78,9 +78,12 @@ public class Display {
 	 * */
 	public void printPlayersMoves() {
 		
+		System.out.println("\n\n\n");
 		// iterating over players
 		for(int i = 0; i < this.players.length; i++) {
-			System.out.print(players[i].getName() + ":");
+			System.out.print("[PP: " + this.players[i].getPiratePoints() + "] "
+							     + "[DG: " + this.players[i].getDigPoints() + "] "
+								 + this.players[i].getName() + ":");
 			
 			// iterating over moves
 			for(int j = 0; j < this.players[i].getMoves().size(); j++) {
