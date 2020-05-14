@@ -14,10 +14,11 @@ import rules.GameRule;
 */
 public class Game {
 
-	private Scanner scan;				// scan object that read all input data from players
-	private Player[] players;			// players on the game
-	private TreasureMap map;			// game map
-	private Display display;			// object that manages game display
+	private Scanner scan;					// scan object that read all input data from players
+	private Player[] players;				// players on the game
+	private TreasureMap map;				// game map
+	private Display display;				// object that manages game display
+	private List<CoordinateMap> treasures;  // array of treasures hidden on map
 	
 	/**
 	 * Object constructor.
@@ -39,9 +40,12 @@ public class Game {
 	public void run() {
 		boolean continueGame = true; // control the game main loop
 		boolean treasureFound = false; // control if move found treasure
-
+		
+		// load file with treasure locations
+		this.treasures = this.loadFileTreasures();
+		
 		// creates the map with n rows and n columns; also set treasure on the map
-		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, this.loadFileTreasures());
+		this.map.createMap(Constraints.MAP_ROWS, Constraints.MAP_COLUMNS, this.treasures);
 
 		// main game loop
 		while(continueGame) {
@@ -91,7 +95,7 @@ public class Game {
 				);
 				
 				// game ends if all treasure is found or all player has no dig points
-				if(GameRule.isAllTreasureFound(this.map) || GameRule.noDigPointsLeft(this.players)) {
+				if(GameRule.isAllTreasureFound(this.treasures) || GameRule.noDigPointsLeft(this.players)) {
 					continueGame = false;
 					break;
 				}
@@ -176,6 +180,16 @@ public class Game {
 				
 				// save if location dug has a treasure
 				hasTreasure = this.map.hasTreasure(rowCoordinate - 1, colCoordinate - 1);
+				
+				// if found treasure
+				if (hasTreasure) {
+					
+					// set treasure array as false
+					this.treasures.get(
+						// get the treasure object that match the move location
+						this.treasures.indexOf(new CoordinateMap(rowCoordinate - 1, colCoordinate - 1, true))
+					).setTreasure(false);
+				}
 				
 				// if coordinate is OK, then mark as dug
 				this.map.dig(rowCoordinate - 1, colCoordinate - 1);

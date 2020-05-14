@@ -61,4 +61,21 @@ public class CoordinateMap {
 	public void setDug(boolean dug) {
 		this.dug = dug;
 	}
+	
+	/**
+	 * Overrides equals method to compare two coordinate map objects.
+	 * @param o object to be compared to this.
+	 * @return True if are equals; False otherwise
+	 * */
+	public boolean equals(Object o) {
+		// cast object
+		CoordinateMap coord = (CoordinateMap) o;
+		
+		// compare row and column
+		boolean equalsRow = this.row == coord.getRow();
+		boolean equalsColumns = this.column == coord.getColumn();
+		
+		// return true if are equals; false otherwise
+		return equalsColumns && equalsRow;
+	}
 }

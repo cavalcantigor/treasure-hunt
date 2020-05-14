@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import game.Constraints;
+import game.CoordinateMap;
 import game.Player;
 import game.TreasureMap;
 
@@ -52,12 +53,10 @@ public class GameRule {
 		return col;
 	}
 	
-	public static boolean isAllTreasureFound(TreasureMap map) {
-		for(int i = 0; i < Constraints.MAP_ROWS; i++) {
-			for(int j = 0; j < Constraints.MAP_COLUMNS; j++) {
-				if (map.hasTreasure(i, j)) {
-					return false;
-				}
+	public static boolean isAllTreasureFound(List<CoordinateMap> treasures) {
+		for(int i = 0; i < treasures.size(); i++) {
+			if (treasures.get(i).getTreasure()) {
+				return false;
 			}
 		}
 		return true;
